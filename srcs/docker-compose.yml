@@ -1,0 +1,54 @@
+services:
+  nginx:
+    build: ./requirements/nginx
+    container_name : nginx
+    volumes:
+      - wp-website:/var/www/html/wordpress
+    image: inception/nginx
+
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+      args:
+        DBUSER : ${DB_USER}
+        USERNAME : ${USERNAME}
+        PASSWORD : ${PASSWORD}
+    container_name : mariadb
+    env_file:
+      - .env
+    volumes:
+      - wp-database:/var/lib/mysql
+    image: inception/mariadb
+
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+      args:
+        DBUSER : ${DB_USER}
+        USERNAME : ${USERNAME}
+        PASSWORD : ${PASSWORD}
+    container_name : wordpress
+    volumes:
+      - wp-website:/var/www/html/wordpress
+    env_file:
+      - .env
+      image: inception/wordpress
+  
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  wp-database:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${HOME}/data/mysql
+
+  wp-website:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${HOME}/data/wp
