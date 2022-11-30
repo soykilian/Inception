@@ -1,0 +1,23 @@
+services:
+  nginx:
+    build: ./srcs/requirements/nginx
+    container_name : nginx
+    volumes:
+      - wp-website:/var/www/html/wordpress
+  mariadb:
+    build: ./srcs/requirements/mariadb
+    container_name : mariadb
+    volumes:
+      - wp-database:/var/lib/mysql
+  wordpress:
+    build: ./srcs/requirements/wordpress
+    container_name : wordpress
+    volumes:
+      - wp-website:/var/www/html/wordpress
+
+volumes:
+  wp-database:
+    driver: local
+
+  wp-website:
+    driver: local
