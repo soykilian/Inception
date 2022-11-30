@@ -5,12 +5,14 @@ services:
     volumes:
       - wp-website:/var/www/html/wordpress
     image: inception/nginx
+    ports:
+      - "443:443"
 
   mariadb:
     build: 
       context: ./requirements/mariadb
       args:
-        DBUSER : ${DB_USER}
+        DBNAME : ${DBNAME}
         USERNAME : ${USERNAME}
         PASSWORD : ${PASSWORD}
     container_name : mariadb
@@ -24,7 +26,7 @@ services:
     build: 
       context: ./requirements/wordpress
       args:
-        DBUSER : ${DB_USER}
+        DBNAME : ${DBNAME}
         USERNAME : ${USERNAME}
         PASSWORD : ${PASSWORD}
     container_name : wordpress
@@ -32,7 +34,7 @@ services:
       - wp-website:/var/www/html/wordpress
     env_file:
       - .env
-      image: inception/wordpress
+    image: inception/wordpress
   
 networks:
   inception:
