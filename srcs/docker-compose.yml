@@ -1,3 +1,4 @@
+version: "3.5"
 services:
   nginx:
     build: ./requirements/nginx
@@ -7,6 +8,8 @@ services:
     image: inception/nginx
     ports:
       - "443:443"
+    networks:
+      - inception
 
   mariadb:
     build: 
@@ -21,6 +24,8 @@ services:
     volumes:
       - wp-database:/var/lib/mysql
     image: inception/mariadb
+    networks:
+      - inception
 
   wordpress:
     build: 
@@ -35,6 +40,8 @@ services:
     env_file:
       - .env
     image: inception/wordpress
+    networks:
+      - inception
   
 networks:
   inception:
