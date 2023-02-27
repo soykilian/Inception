@@ -14,6 +14,8 @@ COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 
+EXPOSE 443
+
 CMD ["nginx"]
 
 #EXPOSE 80/tcp

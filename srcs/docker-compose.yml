@@ -19,8 +19,6 @@ services:
         USERNAME : ${USERNAME}
         PASSWORD : ${PASSWORD}
     container_name : mariadb
-    env_file:
-      - .env
     volumes:
       - wp-database:/var/lib/mysql
     image: inception/mariadb
@@ -37,8 +35,6 @@ services:
     container_name : wordpress
     volumes:
       - wp-website:/var/www/html/wordpress
-    env_file:
-      - .env
     image: inception/wordpress
     networks:
       - inception

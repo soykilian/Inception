@@ -23,15 +23,15 @@ RUN apt-get -y update && apt-get -y install php-cgi \
 
 COPY ./wp_pool.conf /etc/php/7.3/fpm/pool.d/www.conf
 RUN mkdir -p /run/php
-RUN mkdir -p /var/www/wp
-RUN chown -R www-data:www-data /var/www/wp
+RUN mkdir -p /var/www/html/wordpress
+RUN chown -R www-data:www-data /var/www/html/wordpress
 
 #To configure wordpress
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv -f wp-cli.phar /usr/local/bin/wp
 
-WORKDIR "/var/www/wp"
+WORKDIR "/var/www/html/wordpress"
 COPY ./start.sh /home
 RUN chmod +x /home/start.sh
  
