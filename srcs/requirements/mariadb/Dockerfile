@@ -4,7 +4,11 @@ ARG DBNAME
 ARG PASSWORD
 ARG USERNAME
 
+
+
+ENV USERNAME=$USERNAME
 RUN apt-get update
+
 
 RUN apt-get -y install mariadb-server mariadb-client
 
@@ -26,4 +30,5 @@ RUN service mysql start && mysql < conf.sql
 
 EXPOSE 3306
 
-CMD ["mysqld", "--user=$USERNAME", "--bind-address=0.0.0.0", "--skip-networking=false", "--console" ]
+CMD ["sh", "-c", "mysqld --user=$USERNAME --bind-address=0.0.0.0 --skip-networking=false --console" ]
+#CMD mysqld --user=$USERNAME --bind-address=0.0.0.0 --skip-networking=false --console

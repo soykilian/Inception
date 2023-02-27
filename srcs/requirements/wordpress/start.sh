@@ -2,7 +2,7 @@
 
 wp --allow-root core download
 
-wp --allow-root config create --dbhost=mysql --dbname=$DBNAME --dbuser=$USERNAME --dbpass=$PASSWORD
+wp --allow-root config create --dbhost=mariadb --dbname=$DBNAME --dbuser=$USERNAME --dbpass=$PASSWORD
 
 wp --allow-root db create
 

@@ -3,11 +3,29 @@ services:
   nginx:
     build: ./requirements/nginx
     container_name : nginx
+    depends_on:
+      - "wordpress"
     volumes:
       - wp-website:/var/www/html/wordpress
     image: inception/nginx
     ports:
       - "443:443"
+    networks:
+      - inception
+      
+  wordpress:
+    build: 
+      context: ./requirements/wordpress
+      args:
+        DBNAME : ${DBNAME}
+        USERNAME : ${USERNAME}
+        PASSWORD : ${PASSWORD}
+    container_name : wordpress
+    depends_on:
+      - "mariadb"
+    volumes:
+      - wp-website:/var/www/html/wordpress
+    image: inception/wordpress
     networks:
       - inception
 
@@ -25,19 +43,6 @@ services:
     networks:
       - inception
 
-  wordpress:
-    build: 
-      context: ./requirements/wordpress
-      args:
-        DBNAME : ${DBNAME}
-        USERNAME : ${USERNAME}
-        PASSWORD : ${PASSWORD}
-    container_name : wordpress
-    volumes:
-      - wp-website:/var/www/html/wordpress
-    image: inception/wordpress
-    networks:
-      - inception
   
 networks:
   inception:

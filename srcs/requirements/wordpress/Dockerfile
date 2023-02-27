@@ -1,10 +1,16 @@
 FROM debian:buster
 
+EXPOSE 9000
+
 ARG DBNAME
 ARG PASSWORD
 ARG USERNAME
 
-EXPOSE 9000
+
+ENV USERNAME=$USERNAME
+ENV PASSWORD=$PASSWORD
+ENV DBNAME=$DBNAME
+
 
 RUN apt-get -y update && apt-get -y install php-cgi \
 											php-common \
