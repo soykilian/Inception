@@ -12,6 +12,7 @@ services:
       - "443:443"
     networks:
       - inception
+    restart: always
       
   wordpress:
     build: 
@@ -19,7 +20,13 @@ services:
       args:
         DBNAME : ${DBNAME}
         USERNAME : ${USERNAME}
-        PASSWORD : ${PASSWORD}
+        DB_PASSWORD : ${DB_PASSWORD}
+        WP_ADMIN_NAME : ${WP_ADMIN_NAME}
+        WP_ADMIN_PASS : ${WP_ADMIN_PASS}
+        WP_ADMIN_EMAIL : ${WP_ADMIN_EMAIL}
+        WP_USER_NAME : ${WP_USER_NAME}
+        WP_USER_PASS : ${WP_USER_PASS}
+        WP_USER_EMAIL : ${WP_USER_EMAIL}
     container_name : wordpress
     depends_on:
       - "mariadb"
@@ -28,6 +35,7 @@ services:
     image: inception/wordpress
     networks:
       - inception
+    restart: always
 
   mariadb:
     build: 
@@ -35,13 +43,15 @@ services:
       args:
         DBNAME : ${DBNAME}
         USERNAME : ${USERNAME}
-        PASSWORD : ${PASSWORD}
+        DB_PASSWORD : ${DB_PASSWORD}
+        ROOT_PASS: ${ROOT_PASS}
     container_name : mariadb
     volumes:
       - wp-database:/var/lib/mysql
     image: inception/mariadb
     networks:
       - inception
+    restart: always
 
   
 networks:

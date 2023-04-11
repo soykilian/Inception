@@ -1,8 +1,9 @@
 FROM debian:buster
 
 ARG DBNAME
-ARG PASSWORD
+ARG DB_PASSWORD
 ARG USERNAME
+ARG ROOT_PASS
 
 
 
@@ -22,7 +23,8 @@ COPY ./conf.sql .
 
 RUN sed -i "s/DBNAME/$DBNAME/g" ./conf.sql
 RUN sed -i "s/USERNAME/$USERNAME/g" ./conf.sql
-RUN sed -i "s/PASSWORD/$PASSWORD/g" ./conf.sql
+RUN sed -i "s/DB_PASSWORD/$DB_PASSWORD/g" ./conf.sql
+RUN sed -i "s/ROOT_PASS/$ROOT_PASS/g" ./conf.sql
 
 RUN cat ./conf.sql
 
